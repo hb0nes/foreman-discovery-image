@@ -23,6 +23,7 @@ no-auto-default=*
 [logging]
 level=DEBUG
 NM
+
 cat > /etc/udev/rules.d/81-nm-prepare.rules <<'UDEV'
 ACTION=="add", SUBSYSTEM=="net", NAME!="lo", RUN+="/usr/bin/systemd-cat -t nm-prepare /usr/bin/nm-prepare %k"
 UDEV
@@ -43,6 +44,9 @@ systemctl enable NetworkManager-wait-online.service
 
 echo " * enabling nm-prepare service"
 systemctl enable nm-prepare.service
+
+echo " * enabling wired-connection-del service"
+systemctl enable wired-connection-del.service
 
 echo " * enabling required system services"
 systemctl enable ipmi.service

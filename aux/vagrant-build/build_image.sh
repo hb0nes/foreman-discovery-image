@@ -17,7 +17,7 @@ sudo setenforce 0
 # Building in mock did not work at all, therefore building directly on the host
 # VM is the approach.
 
-sudo dnf -y install pykickstart git wget lorax anaconda
+sudo dnf -y install libblockdev-nvme pykickstart git wget lorax anaconda
 
 [ -d $NAME ] || git clone https://github.com/$repoowner/$NAME.git -b $branch
 pushd $NAME

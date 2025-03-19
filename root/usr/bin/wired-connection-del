@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# NetworkManager spawns Wired Connection profile for no reason
+# Clean them up here
+
+nmcli c
+echo "Cleaning up Wired connections"
+nmcli con del 'Wired Connection'
+nmcli c
+echo "Done"
