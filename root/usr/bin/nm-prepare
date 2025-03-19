@@ -18,6 +18,8 @@ configure_secondary_device() {
     read mac < "/sys/class/net/$dev/address"
     mac="$(normalizeHwAddr "$mac")"
     [[ "$mac" == "$bootif" ]] && return
+    # Bring down any interfaces that might've come up during Dracut
+    ip link set $dev down
     if [[ "${KCL_FDI_INITNET,,}" == "all" ]]; then
         autoconnect=true
     else

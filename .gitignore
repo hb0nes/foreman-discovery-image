@@ -19,3 +19,4 @@
 /fdi-rhel*.ks
 /build-livecd-root.conf.sh
 /result/*
+aux/vagrant-build/tmp/

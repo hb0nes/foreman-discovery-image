@@ -11,6 +11,10 @@ Vagrant.configure("2") do |config|
     machine.vm.provision :shell, :path => 'build_image.sh', :args => SHELLARGS
     machine.vm.synced_folder ".", "/vagrant", disabled: true
 
+    config.vm.provider :libvirt do |libvirt|
+      libvirt.driver = "kvm"
+    end
+
     config.vm.provider :libvirt do |domain, cfg|
       cfg.vm.box = 'centos/stream9'
       domain.memory = 7990
