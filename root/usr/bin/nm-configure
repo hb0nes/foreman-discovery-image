@@ -100,11 +100,6 @@ $vlan_section
 EONS
   deploy_config $TMP_CFG $script
 elif [[ "$1" == "primary" ]]; then
-  echo "Cleaning up Wired connections"
-  nmcli con show | grep Wired | awk '{print $1}' | while read con; do
-    echo "Deleting $con"
-    nmcli con del $con
-  done
   vlanid=${3:-$KCL_FDI_VLAN_PRIMARY}
   if [[ "$vlanid" != "" ]]; then
     ctype="vlan"

@@ -15,11 +15,6 @@ systemctl disable network.service
 echo " * disabling kdump crash service"
 systemctl disable kdump.service
 
-echo "* deleting all existing NetworkManager connections"
-nmcli con show | tail +2 | while read con; do
-  nmcli c del $(awk '{print $1}' <<< $con)
-done
-
 echo " * configuring NetworkManager and udev/nm-prepare"
 cat > /etc/NetworkManager/NetworkManager.conf <<'NM'
 [main]
@@ -49,6 +44,9 @@ systemctl enable NetworkManager-wait-online.service
 
 echo " * enabling nm-prepare service"
 systemctl enable nm-prepare.service
+
+echo " * enabling wired-connection-del service"
+systemctl enable wired-connection-del.service
 
 echo " * enabling required system services"
 systemctl enable ipmi.service

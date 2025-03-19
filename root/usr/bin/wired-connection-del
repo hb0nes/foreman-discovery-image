@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# NetworkManager spawns Wired Connection profile for no reason
+# Clean them up here
+
+nmcli c
+
+echo "Giving NetworkManager some time to create Wired Connections (10s)..."
+sleep 10
+
+nmcli c
+
+echo "Cleaning up Wired connections"
+nmcli con show | grep Wire | awk '{print $1}' | while read con; do
+  echo "Deleting $con"
+  nmcli con del $con
+done
+
+echo "Done"

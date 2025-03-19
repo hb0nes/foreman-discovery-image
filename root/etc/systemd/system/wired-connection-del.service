@@ -1,0 +1,11 @@
+[Unit]
+Description=Clean Wired Connection profile
+After=NetworkManager.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/wired-connection-del
+
+[Install]
+WantedBy=multi-user.target
