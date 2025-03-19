@@ -15,6 +15,11 @@ systemctl disable network.service
 echo " * disabling kdump crash service"
 systemctl disable kdump.service
 
+echo "* deleting all existing NetworkManager connections"
+nmcli con show | tail +2 | while read con; do
+  nmcli c del $(awk '{print $1}' <<< $con)
+done
+
 echo " * configuring NetworkManager and udev/nm-prepare"
 cat > /etc/NetworkManager/NetworkManager.conf <<'NM'
 [main]
@@ -23,6 +28,7 @@ no-auto-default=*
 [logging]
 level=DEBUG
 NM
+
 cat > /etc/udev/rules.d/81-nm-prepare.rules <<'UDEV'
 ACTION=="add", SUBSYSTEM=="net", NAME!="lo", RUN+="/usr/bin/systemd-cat -t nm-prepare /usr/bin/nm-prepare %k"
 UDEV
