@@ -1,0 +1,11 @@
+[Unit]
+Description=Configure sshd and root user
+Before=sshd.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/sshd-configure
+
+[Install]
+WantedBy=multi-user.target

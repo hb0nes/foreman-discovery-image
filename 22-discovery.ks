@@ -48,6 +48,9 @@ systemctl enable nm-prepare.service
 echo " * enabling wired-connection-del service"
 systemctl enable wired-connection-del.service
 
+echo " * enabling sshd-configure.service"
+systemctl enable sshd-configure.service
+
 echo " * enabling required system services"
 systemctl enable ipmi.service
 systemctl enable foreman-proxy.service
