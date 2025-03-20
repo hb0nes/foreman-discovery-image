@@ -1,6 +1,5 @@
 [Unit]
 Description=Configure sshd and root user
-Before=sshd.service
 
 [Service]
 Type=oneshot
