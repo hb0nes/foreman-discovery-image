@@ -1,11 +1,11 @@
 #!/bin/bash
-set -x 
+set -x
 
 export VAGRANT_HOME=/home/herman/vagrant.d
 export VAGRANT_CWD=/home/herman/foreman-discovery-image/aux/vagrant-build
-export LC_ALL=C 
-export repoowner=hb0nes 
-export branch=custom 
+export LC_ALL=C
+export repoowner=hb0nes
+export branch=custom
 
 [ -d .git ] || { echo "not in git root"; exit 1; }
 
