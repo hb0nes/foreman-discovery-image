@@ -12,7 +12,7 @@ rootpw() {
   if [[ "${KCL_FDI_ROOTPW}" =~ $hash_re ]]; then
     encryption_flag="-e"
   fi
-  
+
   sed -i 's/^.*PermitRootLogin.*$/PermitRootLogin yes/' '/etc/ssh/sshd_config'
   sed -i 's/^.*PasswordAuthentication.*$/PasswordAuthentication yes/' '/etc/ssh/sshd_config'
   echo "root:${KCL_FDI_ROOTPW}" | chpasswd ${encryption_flag}
