@@ -1,4 +1,10 @@
 %packages --excludedocs --inst-langs en_US.utf8
+
+# For sfc-dkms
+dkms
+make
+gcc
+
 # from lorax examples
 @core
 kernel
