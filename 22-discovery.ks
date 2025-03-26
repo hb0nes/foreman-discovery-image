@@ -1,5 +1,11 @@
 %post
 
+#echo " * Enable EPEL"
+#dnf config-manager --set-enabled crb
+#dnf install -y https://dl.fedoraproject.org/pub/epel/epel{,-next}-release-latest-9.noarch.rpm
+#dnf update
+#dnf install -y dkms make gcc
+
 echo " * ensure hostname resolves quickly"
 cat >/etc/hosts <<EOF
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 fdi
