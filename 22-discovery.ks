@@ -65,6 +65,7 @@ systemctl enable discovery-script-pxeless.service
 
 echo " * install packages from /opt/packages"
 rpm -ivh /opt/packages/*.rpm
+update-initramfs -u
 
 # register service is started manually from discovery-menu
 systemctl disable discovery-register.service

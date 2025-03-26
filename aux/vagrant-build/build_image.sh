@@ -4,7 +4,7 @@ set -x
 export repoowner=${1:-theforeman}
 export branch=${2:-master}
 export proxy_repo=${3:-nightly}
-KERNEL_CMDLINE="nomodeset nokaslr"
+KERNEL_CMDLINE="nomodeset nokaslr fdi.countdown=3"
 NAME=foreman-discovery-image
 
 echo "Short sleep to allow things to settle down"
