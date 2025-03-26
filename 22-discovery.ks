@@ -1,10 +1,13 @@
 %post
 
-#echo " * Enable EPEL"
-#dnf config-manager --set-enabled crb
-#dnf install -y https://dl.fedoraproject.org/pub/epel/epel{,-next}-release-latest-9.noarch.rpm
-#dnf update
-#dnf install -y dkms make gcc
+echo " * Enable EPEL"
+dnf config-manager --set-enabled crb
+dnf install -y https://dl.fedoraproject.org/pub/epel/epel{,-next}-release-latest-9.noarch.rpm
+dnf update
+dnf install -y dkms make gcc
+
+echo " * install packages from /opt/packages"
+rpm -ivh /opt/packages/*.rpm
 
 echo " * ensure hostname resolves quickly"
 cat >/etc/hosts <<EOF
@@ -69,8 +72,6 @@ systemctl enable discovery-menu.service
 systemctl enable discovery-script-pxe.service
 systemctl enable discovery-script-pxeless.service
 
-echo " * install packages from /opt/packages"
-rpm -ivh /opt/packages/*.rpm
 update-initramfs -u
 
 # register service is started manually from discovery-menu
