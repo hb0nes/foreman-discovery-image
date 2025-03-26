@@ -1,0 +1,10 @@
+[Unit]
+Description=Run sfupdate if applicable
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/solarflare-fw
+
+[Install]
+WantedBy=multi-user.target

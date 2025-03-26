@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if ! lspci -v | grep -qi solar; then
+  echo "No SolarFlare NICs detected."
+  exit 0
+fi
+
+sfupdate --write -y

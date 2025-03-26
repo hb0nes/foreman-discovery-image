@@ -51,6 +51,9 @@ systemctl enable wired-connection-del.service
 echo " * enabling sshd-configure.service"
 systemctl enable sshd-configure.service
 
+echo " * enabling solarflare-fw.service"
+systemctl enable solarflare-fw.service
+
 echo " * enabling required system services"
 systemctl enable ipmi.service
 systemctl enable foreman-proxy.service
@@ -59,6 +62,9 @@ systemctl enable discovery-start-extensions.service
 systemctl enable discovery-menu.service
 systemctl enable discovery-script-pxe.service
 systemctl enable discovery-script-pxeless.service
+
+echo " * install packages from /opt/packages"
+rpm -ivh /opt/packages/*.rpm
 
 # register service is started manually from discovery-menu
 systemctl disable discovery-register.service
