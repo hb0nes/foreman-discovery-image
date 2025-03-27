@@ -1,14 +1,20 @@
+%post --nochroot
+{
+  curl https://www.google.com >/dev/null 2>&1 && echo "https connectivity found in post --nochroot" || echo "No http(s) connectivity found in post --nochroot."
+} 2>&1 | tee -a /root/ks-post-nochroot.log
 %post
 {
 
-echo " * Enable EPEL"
-curl https://www.google.com >/dev/null 2>&1 || echo "No http(s) connectivity found."
-dnf config-manager --set-enabled crb
-dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-next-release-latest-9.noarch.rpm
-dnf update
-dnf install -y dkms make gcc
+curl https://www.google.com >/dev/null 2>&1 && echo "https connectivity found in post" || echo "No http(s) connectivity found in post"
+
+#echo " * Enable EPEL"
+#dnf config-manager --set-enabled crb
+#dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-next-release-latest-9.noarch.rpm
+#dnf update
+#dnf install -y dkms make gcc
 
 echo " * install custom modules"
+mkdir -p /lib/modules/$(uname -r)/extra/
 cp -av /opt/custom_modules/* /lib/modules/$(uname -r)/extra/
 
 echo " * install packages from /opt/packages"
