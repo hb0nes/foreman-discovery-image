@@ -1,10 +1,15 @@
 %post
+{
 
 echo " * Enable EPEL"
+curl https://www.google.com >/dev/null 2>&1 || echo "No http(s) connectivity found."
 dnf config-manager --set-enabled crb
-dnf install -y https://dl.fedoraproject.org/pub/epel/epel{,-next}-release-latest-9.noarch.rpm
+dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm https://dl.fedoraproject.org/pub/epel/epel-next-release-latest-9.noarch.rpm
 dnf update
 dnf install -y dkms make gcc
+
+echo " * install custom modules"
+cp -av /opt/custom_modules/* /lib/modules/$(uname -r)/extra/
 
 echo " * install packages from /opt/packages"
 rpm -ivh /opt/packages/*.rpm
@@ -181,4 +186,5 @@ systemctl mask systemd-journal-flush.service
 # extra modules for livecd-creator/livemedia-creator
 echo 'add_drivers+="mptbase mptscsih mptspi hv_storvsc hid_hyperv hv_netvsc hv_vmbus"' > /etc/dracut.conf.d/99-discovery.conf
 
+} 2>&1 | tee -a /root/ks-post.log
 %end
