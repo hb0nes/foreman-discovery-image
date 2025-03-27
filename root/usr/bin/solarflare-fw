@@ -5,22 +5,35 @@ if ! dmesg | grep -qi 'sfc'; then
   exit 0
 fi
 
-if ! sfupdate | grep -qi 'more recent'; then
-  echo 'Firmware does not need updating.'
-  exit 0
-fi
-
-if [[ $(modinfo sfc | grep parm | wc -l) -lt 15 ]]; then
-  echo 'Not enough sfc driver features detected. Assuming in-tree driver is loaded. Trying to dkms autoinstall.'
-  dkms autoinstall
-  dkms status
+if [[ $(ls /sys/module/sfc/parameters/ | wc -l) -lt 15 ]]; then
+  echo 'Not enough sfc driver features detected. Assuming in-tree driver is loaded.'
+  if rpm -q sfc-dkms; then
+    echo "sfc-dkms package already installed."
+    echo -e "\nDKMS autoinstall"
+    dkms autoinstall
+    echo -e "\nDKMS status"
+    dkms status
+  else
+    echo "sfc-dkms package not installed yet."
+    ls /opt/packages/sfc-dkms* >/dev/null || { echo 'No sfc-dkms package installed, nor found at /opt/packages. Aborting.'; exit 1; }
+    echo "Installing sfc-dkms package."
+    rpm -ivh /opt/packages/sfc-dkms*
+  fi
+  echo "Reloading sfc driver."
+  echo -e "\nrmmod sfc"
   rmmod sfc
+  echo -e "\nmodprobe sfc"
   modprobe sfc
 fi
 
-if [[ $(modinfo sfc | grep parm | wc -l) -lt 15 ]]; then
+if [[ $(ls /sys/module/sfc/parameters/ | wc -l) -lt 15 ]]; then
   echo 'Still not enough sfc driver features detected. Please install out-of-tree sfc to write SolarFlare firmware to the NICs. Aborting.'
   exit 1
+fi
+
+if ! sfupdate | grep -qi 'more recent'; then
+  echo 'Firmware does not need updating.'
+  exit 0
 fi
  
 sfupdate --write -y
