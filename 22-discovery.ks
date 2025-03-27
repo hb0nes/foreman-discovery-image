@@ -2,6 +2,8 @@
 {
   curl https://www.google.com >/dev/null 2>&1 && echo "https connectivity found in post --nochroot" || echo "No http(s) connectivity found in post --nochroot."
 } 2>&1 | tee -a /root/ks-post-nochroot.log
+%end
+
 %post
 {
 
