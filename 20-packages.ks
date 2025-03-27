@@ -1,6 +1,7 @@
 %packages --excludedocs --inst-langs en_US.utf8
 
 # For sfc-dkms
+kernel-devel
 dkms
 make
 gcc
