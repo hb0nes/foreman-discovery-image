@@ -11,8 +11,16 @@ if ! sfupdate | grep -qi 'more recent'; then
 fi
 
 if [[ $(modinfo sfc | grep parm | wc -l) -lt 15 ]]; then
-  echo 'Not enough sfc driver features detected. Assuming in-tree driver is loaded. Please install out-of-tree sfc to write SolarFlare firmware to the NICs.'
-  exit 1
+  echo 'Not enough sfc driver features detected. Assuming in-tree driver is loaded. Trying to dkms autoinstall.'
+  dkms autoinstall
+  dkms status
+  rmmod sfc
+  modprobe sfc
 fi
 
+if [[ $(modinfo sfc | grep parm | wc -l) -lt 15 ]]; then
+  echo 'Still not enough sfc driver features detected. Please install out-of-tree sfc to write SolarFlare firmware to the NICs. Aborting.'
+  exit 1
+fi
+ 
 sfupdate --write -y
