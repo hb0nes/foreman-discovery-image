@@ -37,3 +37,7 @@ if ! sfupdate | grep -qi 'more recent'; then
 fi
  
 sfupdate --write -y
+
+ls /sys/class/net | grep -Ev 'lo|bond' | while read if; do
+  systemctl start enable-lldp@"${if}"
+done
