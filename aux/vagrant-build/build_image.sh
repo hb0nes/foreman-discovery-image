@@ -12,6 +12,10 @@ sleep 10
 ping -c1 8.8.8.8 2>&1 >/dev/null && echo NET OK || echo NET FAILURE
 sudo setenforce 0
 
+dnf install -y cloud-utils-growpart
+growpart /dev/vda 1
+resize2fs /dev/vda1
+
 # There are several options with lorax. Recommended is building from ISO in
 # qemu, this requires nested virtualization and it is extremely slow on CI.
 # Building in mock did not work at all, therefore building directly on the host
