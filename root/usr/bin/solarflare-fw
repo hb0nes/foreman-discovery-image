@@ -24,6 +24,11 @@ if [[ $(ls /sys/module/sfc/parameters/ | wc -l) -lt 15 ]]; then
   rmmod sfc
   echo -e "\nmodprobe sfc"
   modprobe sfc
+  sleep 3
+  echo "Enabling lldp again on all NICs"
+  ls /sys/class/net | grep -Ev 'lo|bond' | while read if; do
+    systemctl start enable-lldp@"${if}"
+  done
 fi
 
 if [[ $(ls /sys/module/sfc/parameters/ | wc -l) -lt 15 ]]; then
@@ -38,6 +43,3 @@ fi
  
 sfupdate --write -y
 
-ls /sys/class/net | grep -Ev 'lo|bond' | while read if; do
-  systemctl start enable-lldp@"${if}"
-done
